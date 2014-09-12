@@ -35,6 +35,12 @@
     </insert>
 
 
+    <select id="GET_MEMBER_COUNT" resultType="int">
+        <![CDATA[
+          SELECT MAX(SEQ) FROM MEMBER
+        ]]>
+    </select>
+
     <insert id="INSERT_MEMBER2_INFO" parameterType="member">
         <![CDATA[
           INSERT INTO MEMBER2 (SEQ, NAME) VALUES (#{seq}, #{name})

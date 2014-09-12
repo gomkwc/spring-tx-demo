@@ -2,6 +2,7 @@ package com.neowiz.process.member.web;
 
 import com.neowiz.process.member.domain.Member;
 import com.neowiz.process.member.service.MemberService;
+import com.neowiz.process.member.service.TxPropagation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private TxPropagation txPropagation;
+
 
     @RequestMapping(value = "/member.do", method= RequestMethod.GET)
     public ModelAndView handleData(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -65,6 +70,36 @@ public class MemberController {
             member.setSeq(seq);
             member.setMoney(money);
             memberService.updateMemberMoney(member);
+
+            mav.setViewName("index");
+
+        }catch(Exception e) {
+            logger.error("{}", e);
+        }
+
+        return mav;
+    }
+
+
+    // 금액 TX
+    @RequestMapping(value = "/txPropagation.do", method= RequestMethod.GET)
+    public ModelAndView handleData3(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        ModelAndView mav = new ModelAndView();
+
+        String name = ServletRequestUtils.getStringParameter(request, "name", "");
+        String div = ServletRequestUtils.getStringParameter(request, "div", "1");
+
+        try{
+
+            Member member = new Member();
+            member.setName(name);
+
+            if("1".equals(div))  {
+                txPropagation.testRequired(member);
+            }else{
+                txPropagation.testRequiresNew(member);
+            }
 
             mav.setViewName("index");
 

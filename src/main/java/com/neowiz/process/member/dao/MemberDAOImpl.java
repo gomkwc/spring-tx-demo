@@ -32,13 +32,13 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO {
     @Override
     public void addMemberInfo(Member member) throws Exception {
 
-        logger.debug("1. SEQ : {}", "start");
+        logger.error("1. SEQ : {}", "start");
 
         getSqlSession().insert("memberDAO.INSERT_MEMBER_INFO", member);
         int seq = member.getSeq();
 
-        logger.debug("1. SEQ : {} / NAME : {}", seq, member.getName());
-        logger.debug("1. SEQ : {}", "end");
+        logger.error("1. SEQ : {} / NAME : {}", seq, member.getName());
+        logger.error("1. SEQ : {}", "end");
 
         getSqlSession().insert("memberDAO.INSERT_MEMBER2_INFO", member);
 

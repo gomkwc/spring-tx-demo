@@ -17,7 +17,10 @@ public interface MemberService {
 
     public void addMemberInfo3(Member member) throws Exception;
 
-
     public void updateMemberMoney(Member member) throws Exception;
+
+    public void testRequired() throws Exception;
+
+    public void testRequiresNew() throws Exception;
 
 }

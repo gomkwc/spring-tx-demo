@@ -42,4 +42,16 @@ public class MemberServiceImpl implements MemberService {
     public void updateMemberMoney(Member member) throws Exception {
         memberDAO.updateMemberMoney(member);
     }
+
+
+    @Transactional(propagation=Propagation.REQUIRED)
+    public void testRequired() throws Exception{
+        throw new RuntimeException("Rollback this transaction!");
+    }
+
+
+    @Transactional(propagation=Propagation.REQUIRES_NEW)
+    public void testRequiresNew() throws Exception{
+        throw new RuntimeException("Rollback this transaction!");
+    }
 }
