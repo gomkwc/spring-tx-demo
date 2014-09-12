@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberDAO memberDAO;
 
     // Mybatis
-    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     public void addMemberInfo(Member member) throws Exception {
         memberDAO.addMemberInfo(member);
     }
@@ -36,5 +36,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     public void addMemberInfo3(Member member) throws Exception {
         memberDAO.addMemberInfo3(member);
+    }
+
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    public void updateMemberMoney(Member member) throws Exception {
+        memberDAO.updateMemberMoney(member);
     }
 }

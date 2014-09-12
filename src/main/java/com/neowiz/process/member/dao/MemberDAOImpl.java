@@ -6,6 +6,9 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -44,6 +47,8 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO {
 
     // Insert > Select
     @Override
+    @Transactional(propagation= Propagation.REQUIRES_NEW, isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+
     public void addMemberInfo2(Member member) throws Exception {
         logger.debug("2. SEQ : {}", "start");
 
@@ -70,5 +75,18 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO {
 
         getSqlSession().insert("memberDAO.INSERT_MEMBER2_INFO", member);
 
+    }
+
+    @Override
+    public void updateMemberMoney(Member member) throws Exception {
+        logger.debug("Money : {}", "start");
+        int money =  (Integer) getSqlSession().selectOne("memberDAO.GET_TOTAL_MONEY", member);
+
+        if(money < 10000) {
+            logger.debug("Money Value : {}", money);
+            getSqlSession().update("memberDAO.UPDATE_TOTAL_MONEY", member);
+        }else{
+            logger.debug("Money : {}", "end");
+        }
     }
 }

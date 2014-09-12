@@ -15,4 +15,6 @@ public interface MemberDAO {
     public void addMemberInfo2(Member member) throws Exception;
 
     public void addMemberInfo3(Member member) throws Exception;
+
+    public void updateMemberMoney(Member member) throws Exception;
 }

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,15 +34,40 @@ public class MemberController {
 
         ModelAndView mav = new ModelAndView();
 
-        String name = request.getParameter("name");
+        String name = ServletRequestUtils.getStringParameter(request, "name", "");
         try{
         Member member = new Member();
         member.setName(name);
 
 
-        memberService.addMemberInfo3(member);
+        memberService.addMemberInfo(member);
 
         mav.setViewName("index");
+        }catch(Exception e) {
+            logger.error("{}", e);
+        }
+
+        return mav;
+    }
+
+    // 금액 TX
+    @RequestMapping(value = "/money.do", method= RequestMethod.GET)
+    public ModelAndView handleData2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        ModelAndView mav = new ModelAndView();
+
+        int money = ServletRequestUtils.getIntParameter(request, "money", 0);
+        int seq = ServletRequestUtils.getIntParameter(request, "seq", 0);
+
+        try{
+
+            Member member = new Member();
+            member.setSeq(seq);
+            member.setMoney(money);
+            memberService.updateMemberMoney(member);
+
+            mav.setViewName("index");
+
         }catch(Exception e) {
             logger.error("{}", e);
         }

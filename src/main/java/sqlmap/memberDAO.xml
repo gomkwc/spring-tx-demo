@@ -41,4 +41,17 @@
         ]]>
     </insert>
 
+    <!-- 반드시 tx 가 필요한 경우 -->
+    <select id="GET_TOTAL_MONEY" resultType="int" parameterType="member">
+        <![CDATA[
+          SELECT money FROM BANKBOOK WHERE seq = #{seq} FOR UPDATE
+        ]]>
+    </select>
+
+    <update id="UPDATE_TOTAL_MONEY" parameterType="member">
+        <![CDATA[
+          UPDATE BANKBOOK SET money = money + ${money} WHERE seq = #{seq}
+        ]]>
+    </update>
+
 </mapper>

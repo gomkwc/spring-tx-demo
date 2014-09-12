@@ -260,7 +260,7 @@
     </dependencies>
 
     <build>
-        <finalName>TxDemo</finalName>
+        <finalName>spring-tx-demo</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources-${environment}</directory>
