@@ -41,7 +41,7 @@ public class TxPropagationImpl implements TxPropagation {
             logger.error("testRequired : {}", e);
         }
 
-        // 또는  memberService.testRequired();
+        // OR  memberService.testRequired();
 
     }
 
