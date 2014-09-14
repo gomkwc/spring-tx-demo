@@ -18,7 +18,9 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="com.neowiz" />
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+   <!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> -->
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
 
 
     <mvc:annotation-driven />
@@ -30,7 +32,7 @@
         <property name="order" value="1" />
         <property name="mappings">
             <props>
-                <prop key="/*.do">memberController</prop>
+                <prop key="/index.do">memberController</prop>
 
             </props>
         </property>
